@@ -14,6 +14,25 @@ const (
 	inputFile = "input"
 )
 
+// countOccurrences will return the number of times that v
+// is found in list where list is sorted.
+func countOccurrences[V comparable](value V, list []V) int {
+	total := 0
+	found := false
+	for _, i := range list {
+		if value == i {
+			found = true
+			total += 1
+		} else {
+			// We can break early because the list is sorted.
+			if found {
+				break
+			}
+		}
+	}
+	return total
+}
+
 func main() {
 	file, err := os.Open(inputFile)
 	if err != nil {
