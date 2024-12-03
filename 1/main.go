@@ -44,5 +44,26 @@ func main() {
         total += int(math.Abs(float64(firstList[i] - secondList[i])))
     }
 
+    matches := make(map[int]int, 0)
+    for _, v := range firstList {
+        // Find all numbers in second list and calculate
+        // similarity score.
+        if v, ok := matches[v]; !ok {
+            matches[v] = 0
+        }
+
+        // Scan secondList for occurrences of v...
+        // foundMultiplier := countOccurrences(v, secondList)
+
+        // Add multiplier for later similarity calculation...
+        // matches[v] += foundMultiplier
+
+    }
+
     fmt.Printf("Total distances: %d\n", total)
+    // similarity := 0
+    // for num, mult := range matches {
+    //     similarity += num * mult
+    // }
+    // fmt.Printf("Similarity score: %d\n", similarity)
 }
