@@ -21,8 +21,8 @@ func main() {
 	}
 	defer file.Close()
 
-    firstList := make([]int, 0)
-    secondList := make([]int, 0)
+	firstList := make([]int, 0)
+	secondList := make([]int, 0)
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		line := scanner.Text()
@@ -39,31 +39,31 @@ func main() {
 
 	slices.Sort(firstList)
 	slices.Sort(secondList)
-    total := 0
-    for i, _ := range firstList {
-        total += int(math.Abs(float64(firstList[i] - secondList[i])))
-    }
+	total := 0
+	for i, _ := range firstList {
+		total += int(math.Abs(float64(firstList[i] - secondList[i])))
+	}
 
-    matches := make(map[int]int, 0)
-    for _, v := range firstList {
-        // Find all numbers in second list and calculate
-        // similarity score.
-        if v, ok := matches[v]; !ok {
-            matches[v] = 0
-        }
+	matches := make(map[int]int, 0)
+	for _, v := range firstList {
+		// Find all numbers in second list and calculate
+		// similarity score.
+		if v, ok := matches[v]; !ok {
+			matches[v] = 0
+		}
 
-        // Scan secondList for occurrences of v...
-        // foundMultiplier := countOccurrences(v, secondList)
+		// Scan secondList for occurrences of v...
+		// foundMultiplier := countOccurrences(v, secondList)
 
-        // Add multiplier for later similarity calculation...
-        // matches[v] += foundMultiplier
+		// Add multiplier for later similarity calculation...
+		// matches[v] += foundMultiplier
 
-    }
+	}
 
-    fmt.Printf("Total distances: %d\n", total)
-    // similarity := 0
-    // for num, mult := range matches {
-    //     similarity += num * mult
-    // }
-    // fmt.Printf("Similarity score: %d\n", similarity)
+	fmt.Printf("Total distances: %d\n", total)
+	// similarity := 0
+	// for num, mult := range matches {
+	//     similarity += num * mult
+	// }
+	// fmt.Printf("Similarity score: %d\n", similarity)
 }
