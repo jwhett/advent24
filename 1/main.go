@@ -72,17 +72,17 @@ func main() {
 		}
 
 		// Scan secondList for occurrences of v...
-		// foundMultiplier := countOccurrences(v, secondList)
+		foundMultiplier := countOccurrences(v, secondList)
 
 		// Add multiplier for later similarity calculation...
-		// matches[v] += foundMultiplier
+		matches[v] += foundMultiplier
 
 	}
 
 	fmt.Printf("Total distances: %d\n", total)
-	// similarity := 0
-	// for num, mult := range matches {
-	//     similarity += num * mult
-	// }
-	// fmt.Printf("Similarity score: %d\n", similarity)
+	similarity := 0
+	for num, mult := range matches {
+		similarity += num * mult
+	}
+	fmt.Printf("Similarity score: %d\n", similarity)
 }
