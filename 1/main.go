@@ -59,7 +59,7 @@ func main() {
 	slices.Sort(firstList)
 	slices.Sort(secondList)
 	total := 0
-	for i, _ := range firstList {
+	for i := range firstList {
 		total += int(math.Abs(float64(firstList[i] - secondList[i])))
 	}
 
