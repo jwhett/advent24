@@ -1,13 +1,11 @@
-// Template file only!
-// Saving some time each day to ensure I
-// actually write tests.
 package main
 
 import "testing"
 
 type IncreaseTest struct {
-	Reading  []int
-	Expected bool
+	Reading     []int
+	Expected    bool
+	Description string
 }
 
 func (st IncreaseTest) Test() bool {
@@ -15,8 +13,9 @@ func (st IncreaseTest) Test() bool {
 }
 
 type DecreaseTest struct {
-	Reading  []int
-	Expected bool
+	Reading     []int
+	Expected    bool
+	Description string
 }
 
 func (st DecreaseTest) Test() bool {
@@ -25,8 +24,9 @@ func (st DecreaseTest) Test() bool {
 
 func TestMustIncrease(t *testing.T) {
 	tests := []IncreaseTest{
-		{[]int{}, true},
-		{[]int{}, false},
+		{[]int{1, 3, 6, 7, 9}, true, "Stable increase"},
+		{[]int{1, 3, 6, 6, 7}, false, "Unstable increase; doubles"},
+		{[]int{7, 6, 4, 2, 1}, false, "Decrease"},
 	}
 
 	for _, test := range tests {
@@ -38,13 +38,14 @@ func TestMustIncrease(t *testing.T) {
 
 func TestMustDecrease(t *testing.T) {
 	tests := []DecreaseTest{
-		{[]int{}, true},
-		{[]int{}, false},
+		{[]int{7, 6, 4, 2, 1}, true, "Stable decrease"},
+		{[]int{7, 6, 6, 4, 2}, false, "Unstable decrease; doubles"},
+		{[]int{1, 2, 7, 8, 9}, false, "Increase"},
 	}
 
 	for _, test := range tests {
 		if test.Test() != test.Expected {
-			t.Errorf("input: %+v - wanted %t", test.Reading, test.Expected)
+			t.Errorf("%s - input: %+v, wanted %t", test.Description, test.Reading, test.Expected)
 		}
 	}
 }
