@@ -11,8 +11,8 @@ type IncreaseTest struct {
 	Description string
 }
 
-func (st IncreaseTest) Test() bool {
-	return mustIncrease(st.Reading)
+func (it IncreaseTest) Test() bool {
+	return mustIncrease(it.Reading)
 }
 
 type DecreaseTest struct {
@@ -21,8 +21,8 @@ type DecreaseTest struct {
 	Description string
 }
 
-func (st DecreaseTest) Test() bool {
-	return mustDecrease(st.Reading)
+func (dt DecreaseTest) Test() bool {
+	return mustDecrease(dt.Reading)
 }
 
 type SafetyTest struct {
