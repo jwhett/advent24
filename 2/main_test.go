@@ -1,6 +1,9 @@
 package main
 
-import "testing"
+import (
+	"slices"
+	"testing"
+)
 
 type IncreaseTest struct {
 	Reading     []int
@@ -30,6 +33,16 @@ type SafetyTest struct {
 
 func (st SafetyTest) Test() bool {
 	return isSafe(st.Reading)
+}
+
+type ParserTest struct {
+	Input       string
+	Expected    []int
+	Description string
+}
+
+func (pt ParserTest) Test() bool {
+	return slices.Compare(parseReading(pt.Input), pt.Expected) == 0
 }
 
 func TestMustIncrease(t *testing.T) {
@@ -75,6 +88,18 @@ func TestSafety(t *testing.T) {
 	for _, test := range tests {
 		if test.Test() != test.Expected {
 			t.Errorf("%s - input: %+v, wanted %t", test.Description, test.Reading, test.Expected)
+		}
+	}
+}
+
+func TestParser(t *testing.T) {
+	tests := []ParserTest{
+		{"7 6 4 2 1", []int{7, 6, 4, 2, 1}, "Safe, decreasing"},
+	}
+
+	for _, test := range tests {
+		if !test.Test() {
+			t.Errorf("%s - input: %+v, wanted %v", test.Description, test.Input, test.Expected)
 		}
 	}
 }

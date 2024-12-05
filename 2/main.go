@@ -4,6 +4,8 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
+	"strings"
 )
 
 const (
@@ -48,6 +50,18 @@ func isSafe(list []int) bool {
 	return mustDecrease(list) || mustIncrease(list)
 }
 
+// parseReading will take the raw string from the readings
+// output and returns a properly formatted reading.
+func parseReading(input string) []int {
+	reading := make([]int, 0)
+	raw := strings.Split(input, " ")
+	for _, v := range raw {
+		vv, _ := strconv.Atoi(v)
+		reading = append(reading, vv)
+	}
+	return reading
+}
+
 func main() {
 	file, err := os.Open(inputFile)
 	if err != nil {
@@ -55,12 +69,18 @@ func main() {
 	}
 	defer file.Close()
 
+	safeReportCount := 0
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		// line = scanner.Text()
+		reading := parseReading(scanner.Text())
+		if isSafe(reading) {
+			safeReportCount += 1
+		}
 	}
 
 	if err := scanner.Err(); err != nil {
 		fmt.Printf("Scanner error: %v", err)
 	}
+
+	fmt.Printf("Safe reports: %d\n", safeReportCount)
 }
