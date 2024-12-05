@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"context"
 	"fmt"
 	"os"
 	"strconv"
@@ -15,7 +16,7 @@ const (
 // mustIncrease returns true when all values in the
 // slice are increasing. All values must increase by
 // at least 1, but no more than 3.
-func mustIncrease(list []int) bool {
+func mustIncrease(ctx context.Context, list []int) bool {
 	last := -1
 	for _, v := range list {
 		if last == -1 || last < v && last+3 >= v {
@@ -31,7 +32,7 @@ func mustIncrease(list []int) bool {
 // mustDecrease returns true when all values in the
 // slice are decreasing. All values must decrease by
 // at least 1, but no more than 3.
-func mustDecrease(list []int) bool {
+func mustDecrease(ctx context.Context, list []int) bool {
 	last := -1
 	for _, v := range list {
 		if last == -1 || last > v && last-3 <= v {
@@ -47,7 +48,8 @@ func mustDecrease(list []int) bool {
 // isSafe checks to see if a reading (list) is either
 // all increasing or all decreasing.
 func isSafe(list []int) bool {
-	return mustDecrease(list) || mustIncrease(list)
+	ctx := context.TODO()
+	return mustDecrease(ctx, list) || mustIncrease(ctx, list)
 }
 
 // parseReading will take the raw string from the readings

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"slices"
 	"testing"
 )
@@ -12,7 +13,8 @@ type IncreaseTest struct {
 }
 
 func (it IncreaseTest) Test() bool {
-	return mustIncrease(it.Reading)
+	ctx := context.TODO()
+	return mustIncrease(ctx, it.Reading)
 }
 
 type DecreaseTest struct {
@@ -22,7 +24,8 @@ type DecreaseTest struct {
 }
 
 func (dt DecreaseTest) Test() bool {
-	return mustDecrease(dt.Reading)
+	ctx := context.TODO()
+	return mustDecrease(ctx, dt.Reading)
 }
 
 type SafetyTest struct {
