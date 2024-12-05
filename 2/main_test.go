@@ -64,8 +64,12 @@ func TestMustDecrease(t *testing.T) {
 
 func TestSafety(t *testing.T) {
 	tests := []SafetyTest{
-		{[]int{}, true, "Safe"},
-		{[]int{}, true, "Unsafe"},
+		{[]int{7, 6, 4, 2, 1}, true, "Safe, decreasing"},
+		{[]int{1, 2, 7, 8, 9}, false, "Unsafe, too great of an increase"},
+		{[]int{9, 7, 6, 2, 1}, false, "Unsafe, too great of a decrease"},
+		{[]int{1, 3, 2, 4, 5}, false, "Unsafe, increasing and decreasing"},
+		{[]int{8, 6, 4, 4, 1}, false, "Unsafe, double readings"},
+		{[]int{1, 3, 6, 7, 9}, true, "Safe, increasing"},
 	}
 
 	for _, test := range tests {

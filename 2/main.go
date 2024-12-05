@@ -42,6 +42,12 @@ func mustDecrease(list []int) bool {
 	return true
 }
 
+// isSafe checks to see if a reading (list) is either
+// all increasing or all decreasing.
+func isSafe(list []int) bool {
+	return mustDecrease(list) || mustIncrease(list)
+}
+
 func main() {
 	file, err := os.Open(inputFile)
 	if err != nil {
