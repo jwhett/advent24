@@ -48,14 +48,9 @@ func main() {
 		fmt.Printf("Scanner error: %v", err)
 	}
 
-	products := make([]int, 0)
-	for _, mul := range found {
-		products = append(products, parseMul(mul))
-	}
-
 	sum := 0
-	for _, product := range products {
-		sum += product
+	for _, mul := range found {
+		sum += parseMul(mul)
 	}
 
 	fmt.Printf("Sum of all products: %d\n", sum)
