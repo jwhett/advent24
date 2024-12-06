@@ -6,6 +6,19 @@ import (
 	"os"
 )
 
+// Directions
+const (
+	UP    = "^"
+	DOWN  = "v"
+	LEFT  = "<"
+	RIGHT = ">"
+)
+
+// Obsticals
+const (
+	BLOCKER = "#"
+)
+
 const (
 	inputFile = "input"
 )
