@@ -2,9 +2,9 @@ package main
 
 import (
 	"bufio"
-	"context"
 	"fmt"
 	"os"
+	"slices"
 	"strconv"
 	"strings"
 )
@@ -13,17 +13,26 @@ const (
 	inputFile = "input"
 )
 
+type ErrorTracker struct {
+	IncreaseErrors, DecreaseErrors int
+}
+
 // mustIncrease returns true when all values in the
 // slice are increasing. All values must increase by
 // at least 1, but no more than 3.
-func mustIncrease(ctx context.Context, list []int) bool {
+func mustIncrease(tracker ErrorTracker, list []int) bool {
 	last := -1
-	for _, v := range list {
+	for i, v := range list {
 		if last == -1 || last < v && last+3 >= v {
 			last = v
 			continue
 		} else {
-			return false
+			tracker.IncreaseErrors += 1
+			if tracker.IncreaseErrors > 1 {
+				return false
+			}
+			newList := slices.Delete(list, i, i+1)
+			mustIncrease(tracker, newList)
 		}
 	}
 	return true
@@ -32,14 +41,19 @@ func mustIncrease(ctx context.Context, list []int) bool {
 // mustDecrease returns true when all values in the
 // slice are decreasing. All values must decrease by
 // at least 1, but no more than 3.
-func mustDecrease(ctx context.Context, list []int) bool {
+func mustDecrease(tracker ErrorTracker, list []int) bool {
 	last := -1
-	for _, v := range list {
+	for i, v := range list {
 		if last == -1 || last > v && last-3 <= v {
 			last = v
 			continue
 		} else {
-			return false
+			tracker.DecreaseErrors += 1
+			if tracker.DecreaseErrors > 1 {
+				return false
+			}
+			newList := slices.Delete(list, i, i+1)
+			mustDecrease(tracker, newList)
 		}
 	}
 	return true
@@ -48,8 +62,7 @@ func mustDecrease(ctx context.Context, list []int) bool {
 // isSafe checks to see if a reading (list) is either
 // all increasing or all decreasing.
 func isSafe(list []int) bool {
-	ctx := context.TODO()
-	return mustDecrease(ctx, list) || mustIncrease(ctx, list)
+	return mustDecrease(ErrorTracker{}, list) || mustIncrease(ErrorTracker{}, list)
 }
 
 // parseReading will take the raw string from the readings
